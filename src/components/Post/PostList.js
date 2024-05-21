@@ -1,41 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { getPosts, deletePost } from '../API/Handleapi';
+// src/components/PostList.js
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetchPosts();
+        axios.get('http://localhost:5000/posts/')
+            .then(response => {
+                setPosts(response.data);
+            })
+            .catch(error => console.log(error));
     }, []);
-
-    const fetchPosts = async () => {
-        const response = await getPosts();
-        setPosts(response.data);
-    };
-
-    const handleDelete = async (id) => {
-        await deletePost(id);
-        fetchPosts();
-    };
 
     return (
         <div>
-            <h1>Posts</h1>
+            <h2>Posts</h2>
+            <Link to="/add">Add New Post</Link>
             <ul>
                 {posts.map(post => (
                     <li key={post._id}>
-                        <h2>{post.title}</h2>
-                        <img src={`http://localhost:5000/${post.img}`} alt={post.title} />
-                        <p>{post.category}</p>
-                        <p>{post.newPrice}</p>
-                        <p>{post.oldPrice}</p>
-                        <p>{post.save}</p>
-                        <button onClick={() => handleDelete(post._id)}>Delete</button>
+                        <Link to={`/update/${post._id}`}>{post.title}</Link>
+                        <Link to={`/delete/${post._id}`}>Delete</Link>
                     </li>
                 ))}
             </ul>
         </div>
     );
-};
+}
 
 export default PostList;

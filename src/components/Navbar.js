@@ -8,7 +8,6 @@ import Cloth from './Items/Cloth';
 import Gloves from './Items/Gloves';
 import Kitchen from './Items/Kitchen';
 import { Link } from 'react-router-dom';
-
 const Navbar = () => {
 
 

@@ -18,16 +18,28 @@ const Cloth = () => {
     return (
         <div className="container mx-auto px-4 lg:px-0">
             <h1 className="text-2xl text-center mt-10 mb-10 font-bold">Cloth</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {posts.map(product => (
-                    <div key={product.id} className="bg-white p-4 rounded-lg shadow-md">
-                        <img src={product.img} alt={product.title} className="w-full h-32 object-cover mb-4" />
-                        <h2 className="text-lg font-semibold">{product.title}</h2>
-                        <div className="flex justify-between items-center mt-2">
-                            <span className="text-gray-600">${product.newPrice}</span>
-                            <span className="text-green-500">Save ${product.oldPrice}</span>
+                    <Link to={`/product/${product._id}`} key={product.id} className="bg-white p-2 rounded-lg shadow-md">
+                        <img src={product.img} alt={product.title} className="w-full rounded-sm h-[280px] object-cover mb-4" />
+                        <h2 className="text-[22px]  font-semibold">{product.title}</h2>
+                        <div className="flex justify-between items-center mb-2 mt-2">
+                            <div className='flex items-center'>
+
+
+                                <span className="me-4 font-semibold   text-red-500">रू {product.newPrice}</span>
+                                <span className=" text-sm font-semibold   text-gray-700 line-through">रू {product.oldPrice}</span>
+
+                            </div>
+                            <div>
+
+                                <span className="text-green-500 font-bold mb-4">
+                                    {Math.round(((product.newPrice - product.oldPrice) / product.oldPrice) * 100)}% OFF
+                                </span>
+                            </div>
+
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

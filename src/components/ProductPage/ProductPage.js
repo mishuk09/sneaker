@@ -11,7 +11,12 @@ const ProductPage = () => {
 
   useEffect(() => {
     axios.get(`http://localhost:5000/posts/${id}`)
-      .then(response => setProduct(response.data))
+      .then(response => {
+        const productData = response.data;
+        setProduct(productData);
+        setSelectedColor(productData.color[0]); // Default to first color
+        setSelectedSize(productData.size[0]); // Default to first size
+      })
       .catch(error => console.log(error));
   }, [id]);
 
@@ -33,38 +38,39 @@ const ProductPage = () => {
         </div>
         <div className="md:w-1/2 mt-4 md:mt-0">
           <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
-          <p className="text-xl font-semibold mb-1 text-red-500">रू {product.newPrice}</p>
-          <p className="text-lg font-semibold mb-1 text-gray-700 line-through">रू {product.oldPrice}</p>
-          <p className="text-green-500 font-bold mb-4">
+          <div className=' flex items-center'>
+            <p className="text-xl me-4 font-semibold mb-1 text-red-500">रू {product.newPrice}</p>
+            <p className="text-sm  font-semibold mb-1 text-gray-700 line-through">रू {product.oldPrice}</p>
+          </div> <p className="text-green-500 font-bold mb-4">
             {Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)}% OFF
           </p>
-
           <p className="text-gray-600 mb-4">Shipping is calculated at checkout</p>
 
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-semibold text-gray-700">Choose Color</label>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">Color</label>
             <div className="flex space-x-2">
               {product.color.map(color => (
                 <button
                   key={color}
-                  className={`px-4 py-2 rounded-lg border ${selectedColor === color ? 'text-white' : 'bg-white text-gray-700'}`}
-                  style={{ backgroundColor: selectedColor === color ? color.toLowerCase() : 'white' }}
+                  className="relative px-4 py-4 rounded-full border"
+                  style={{ backgroundColor: color.toLowerCase() }}
                   onClick={() => setSelectedColor(color)}
                 >
-                  {color}
+                  {selectedColor === color && (
+                    <span className="absolute inset-0 flex items-center justify-center text-white font-bold">✓</span>
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
-
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-semibold text-gray-700">Choose Size</label>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">Size</label>
             <div className="flex space-x-2">
               {product.size.map(size => (
                 <button
                   key={size}
-                  className={`px-4 py-2 rounded-lg border ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
+                  className={`px-4  py-2 text-base rounded-full border ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
                   onClick={() => setSelectedSize(size)}
                 >
                   {size}

@@ -30,7 +30,7 @@ const Navbar = () => {
                     </div>
                     <div className="navbar-logo flex gap-6">
                         <div><FontAwesomeIcon size='xl' icon={faMagnifyingGlass} /></div>
-                        <div><FontAwesomeIcon size='xl' icon={faCartShopping} /></div>
+                        <Link to='/cart'><FontAwesomeIcon size='xl' icon={faCartShopping} /></Link>
                         <div><Link to='auth'><FontAwesomeIcon size='xl' icon={faUser} /></Link></div>
                     </div>
                 </div>

@@ -13,6 +13,9 @@ import PostList from './components/Post/PostList';
 import AddPost from './components/Post/AddPost';
 import UpdatePost from './components/Post/UpdatePost';
 import DeletePost from './components/Post/DeletePost';
+import ProductPage from './components/ProductPage/ProductPage';
+import Edit from './components/Post/Edit';
+import Delete from './components/Post/Delete';
 
 function App() {
   return (
@@ -26,11 +29,16 @@ function App() {
         <Route path='/kitchen' element={<Kitchen />}></Route>
         <Route path='/auth' element={<SignIn />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
+        <Route path='/product/:id' element={<ProductPage />}></Route>
         {/* <Route path='/postlist' element={<PostList />}></Route> */}
         <Route path='/addpost' element={<AddPost />}></Route>
-        <Route path="/postlist" element={<PostList />} />
+        {/* <Route path="/postlist" element={<PostList />} /> */}
         <Route path="/update/:id" element={<UpdatePost />} />
         <Route path="/delete/:id" element={<DeletePost />} />
+
+
+        <Route path="/edit" element={<Edit />} />
+        <Route path="/delete" element={<Delete />} />
 
 
       </Routes>

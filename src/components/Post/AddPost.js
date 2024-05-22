@@ -8,14 +8,37 @@ const AddPost = () => {
     const [title, setTitle] = useState('');
     const [newPrice, setNewPrice] = useState('');
     const [oldPrice, setOldPrice] = useState('');
+    const [color, setColor] = useState([]);
+    const [size, setSize] = useState([]);
+    const [description, setDescription] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newPost = { img, category, title, newPrice, oldPrice };
+        const newPost = { img, category, title, newPrice, oldPrice, color, size, description };
 
         axios.post('http://localhost:5000/posts/add', newPost)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
+    }
+
+    const handleAddColor = () => {
+        setColor([...color, '']);
+    }
+
+    const handleColorChange = (index, value) => {
+        const newColors = [...color];
+        newColors[index] = value;
+        setColor(newColors);
+    }
+
+    const handleAddSize = () => {
+        setSize([...size, '']);
+    }
+
+    const handleSizeChange = (index, value) => {
+        const newSizes = [...size];
+        newSizes[index] = value;
+        setSize(newSizes);
     }
 
     return (
@@ -46,6 +69,40 @@ const AddPost = () => {
                 <div>
                     <label>Old Price: </label>
                     <input type="number" value={oldPrice} onChange={e => setOldPrice(e.target.value)} required />
+                </div>
+                <div>
+                    <label>Colors: </label>
+                    {color.map((c, index) => (
+                        <input
+                            key={index}
+                            type="text"
+                            value={c}
+                            onChange={e => handleColorChange(index, e.target.value)}
+                            required
+                        />
+                    ))}
+                    <button type="button" onClick={handleAddColor}>Add Color</button>
+                </div>
+                <div>
+                    <label>Sizes: </label>
+                    {size.map((s, index) => (
+                        <input
+                            key={index}
+                            type="text"
+                            value={s}
+                            onChange={e => handleSizeChange(index, e.target.value)}
+                            required
+                        />
+                    ))}
+                    <button type="button" onClick={handleAddSize}>Add Size</button>
+                </div>
+                <div>
+                    <label>Description: </label>
+                    <textarea
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        required
+                    ></textarea>
                 </div>
                 <button type="submit">Add Post</button>
             </form>

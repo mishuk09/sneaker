@@ -23,8 +23,8 @@ const PostList = () => {
                     <li key={post._id}>
                         {post.title}
                         <img src={post.img} alt="" />
-                        {/* <Link to={`/update/${post._id}`}>{post.title}</Link>
-                        <Link to={`/delete/${post._id}`}>Delete</Link> */}
+                        <Link to={`/update/${post._id}`}>{post.title}</Link>
+                        <Link to={`/delete/${post._id}`}>Delete</Link>
                     </li>
                 ))}
             </ul>

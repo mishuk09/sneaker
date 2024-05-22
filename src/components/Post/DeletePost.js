@@ -16,10 +16,15 @@ const DeletePost = () => {
             .catch(err => console.log(err));
     }
 
+    const handleCancel = () => {
+        navigate(-1); // Navigate back to the previous page
+    }
+
     return (
         <div>
             <h2>Are you sure you want to delete this post?</h2>
-            <button onClick={handleDelete}>Yes, Delete</button>
+            <button onClick={handleDelete} style={{ marginRight: '10px' }}>Yes, Delete</button>
+            <button onClick={handleCancel}>Cancel</button>
         </div>
     );
 }

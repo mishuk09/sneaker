@@ -18,6 +18,7 @@ import Edit from './components/Post/Edit';
 import Delete from './components/Post/Delete';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
+import Checkout from './components/Checkout';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path='/' element={<New />}></Route>
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path='/shoes' element={<Shoes />}></Route>
         <Route path='/cloth' element={<Cloth />}></Route>
         <Route path='/glovs' element={<Gloves />}></Route>

@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import mainlogo from '../mainlogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
-import New from './Items/New';
-import Shoes from './Items/Shoes';
-import Cloth from './Items/Cloth';
-import Gloves from './Items/Gloves';
-import Kitchen from './Items/Kitchen';
-import { Link } from 'react-router-dom';
-const Navbar = () => {
+import Cart from './Cart';  // Import the Cart component
 
+const Navbar = () => {
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const toggleCart = () => {
+        setIsCartOpen(!isCartOpen);
+    };
 
     return (
         <div className="">
-            <div className=" border-b shadow-md ">
+            <div className="border-b shadow-md">
                 <div className='container mx-auto flex justify-between items-center py-4'>
-
                     <div className="navbar-logo">
                         <Link to='/'> <img className='w-12' src={mainlogo} alt="Logo" /></Link>
                     </div>
@@ -28,14 +28,14 @@ const Navbar = () => {
                             <li className='me-4 font-semibold'><Link to='/kitchen'>Kitchen</Link></li>
                         </ul>
                     </div>
-                    <div className="navbar-logo flex gap-6">
+                    <div className="navbar-icons flex gap-6">
                         <div><FontAwesomeIcon size='xl' icon={faMagnifyingGlass} /></div>
-                        <Link to='/cart'><FontAwesomeIcon size='xl' icon={faCartShopping} /></Link>
-                        <div><Link to='auth'><FontAwesomeIcon size='xl' icon={faUser} /></Link></div>
+                        <div onClick={toggleCart} className="cursor-pointer"><FontAwesomeIcon size='xl' icon={faCartShopping} /></div>
+                        <div><Link to='/auth'><FontAwesomeIcon size='xl' icon={faUser} /></Link></div>
                     </div>
                 </div>
             </div>
-
+            <Cart isOpen={isCartOpen} toggleCart={toggleCart} />  {/* Add the Cart component */}
         </div>
     );
 };

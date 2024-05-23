@@ -19,37 +19,48 @@ import Delete from './components/Post/Delete';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Checkout from './components/Checkout';
+import { CartProvider } from './components/CartContext';
+import { useState } from 'react';
 
 function App() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
   return (
     <div className="App">
-      <Navbar />
+      <CartProvider>
+        <Navbar toggleCart={toggleCart} isCartOpen={isCartOpen} />
 
-      <Routes>
-        <Route path='/' element={<New />}></Route>
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path='/shoes' element={<Shoes />}></Route>
-        <Route path='/cloth' element={<Cloth />}></Route>
-        <Route path='/glovs' element={<Gloves />}></Route>
-        <Route path='/kitchen' element={<Kitchen />}></Route>
-        <Route path='/auth' element={<SignIn />}></Route>
-        <Route path='/dashboard' element={<Dashboard />}></Route>
-        <Route path='/product/:id' element={<ProductPage />}></Route>
-        {/* <Route path='/postlist' element={<PostList />}></Route> */}
-        <Route path='/addpost' element={<AddPost />}></Route>
-        {/* <Route path="/postlist" element={<PostList />} /> */}
-        <Route path="/update/:id" element={<UpdatePost />} />
-        <Route path="/delete/:id" element={<DeletePost />} />
-
-
-        <Route path="/edit" element={<Edit />} />
-        <Route path="/delete" element={<Delete />} />
+        <Routes>
+          <Route path='/' element={<New />}></Route>
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path='/shoes' element={<Shoes />}></Route>
+          <Route path='/cloth' element={<Cloth />}></Route>
+          <Route path='/glovs' element={<Gloves />}></Route>
+          <Route path='/kitchen' element={<Kitchen />}></Route>
+          <Route path='/auth' element={<SignIn />}></Route>
+          <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route path="/product/:id" element={<ProductPage toggleCart={toggleCart} />} />
+    
+          {/* <Route path='/postlist' element={<PostList />}></Route> */}
+          <Route path='/addpost' element={<AddPost />}></Route>
+          {/* <Route path="/postlist" element={<PostList />} /> */}
+          <Route path="/update/:id" element={<UpdatePost />} />
+          <Route path="/delete/:id" element={<DeletePost />} />
 
 
-      </Routes>
-      <Footer />
-    </div>
+          <Route path="/edit" element={<Edit />} />
+          <Route path="/delete" element={<Delete />} />
+
+
+        </Routes>
+
+        <Footer />
+      </CartProvider >
+    </div >
   );
 }
 

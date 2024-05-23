@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useCart } from '../CartContext';
 
-const ProductPage = () => {
+const ProductPage = ({ toggleCart }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/posts/${id}`)
@@ -26,6 +28,19 @@ const ProductPage = () => {
     setQuantity(prevQuantity => Math.max(1, prevQuantity + increment));
   };
 
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      img: product.img,
+      color: selectedColor,
+      size: selectedSize,
+      price: product.newPrice,
+      quantity
+    });
+    toggleCart(); // Open cart when item is added
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col md:flex-row md:space-x-8">
@@ -38,10 +53,11 @@ const ProductPage = () => {
         </div>
         <div className="md:w-1/2 mt-4 md:mt-0">
           <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
-          <div className=' flex items-center'>
+          <div className='flex items-center'>
             <p className="text-xl me-4 font-semibold mb-1 text-red-500">रू {product.newPrice}</p>
-            <p className="text-sm  font-semibold mb-1 text-gray-700 line-through">रू {product.oldPrice}</p>
-          </div> <p className="text-green-500 font-bold mb-4">
+            <p className="text-sm font-semibold mb-1 text-gray-700 line-through">रू {product.oldPrice}</p>
+          </div>
+          <p className="text-green-500 font-bold mb-4">
             {Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)}% OFF
           </p>
           <p className="text-gray-600 mb-4">Shipping is calculated at checkout</p>
@@ -70,7 +86,7 @@ const ProductPage = () => {
               {product.size.map(size => (
                 <button
                   key={size}
-                  className={`px-4  py-2 text-base rounded-full border ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
+                  className={`px-4 py-2 text-base rounded-full border ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
                   onClick={() => setSelectedSize(size)}
                 >
                   {size}
@@ -97,7 +113,10 @@ const ProductPage = () => {
             >+</button>
           </div>
 
-          <button className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600">
+          <button
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600"
+            onClick={handleAddToCart}
+          >
             Add to Cart
           </button>
 

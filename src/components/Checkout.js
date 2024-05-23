@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import mainlogo from '../mainlogo.png';
-
+import { useCart } from './CartContext';
 
 const Checkout = () => {
+    const { cartItems } = useCart();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -27,6 +27,10 @@ const Checkout = () => {
         console.log('Form data submitted:', formData);
     };
 
+    const calculateTotal = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
     return (
         <div className="container mx-auto p-4 lg:px-0">
             <div className="text-center mb-10">
@@ -35,8 +39,6 @@ const Checkout = () => {
             </div>
             <div className='flex gap-4'>
                 <div className='w-full'>
-
-
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6">
                             <h2 className="text-xl font-semibold mb-4">1. General Information</h2>
@@ -123,26 +125,27 @@ const Checkout = () => {
                                 <label className="font-medium">Cash on delivery</label>
                             </div>
                         </div>
+                        <button type="submit" className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button>
                     </form>
                 </div>
                 <div className='w-full'>
                     <div className="mb-6">
                         <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-                        <div className='flex gap-4'>
-                            <div>
+                        {cartItems.map((item, index) => (
+                            <div key={`${item.id}-${index}`} className='flex gap-4 mb-4'>
                                 <div>
-                                    <img className='w-[100px]' src={mainlogo} alt="Logo" />
+                                    <img className='w-[100px]' src={item.img} alt={item.title} />
+                                </div>
+                                <div className="p-4 bg-gray-100 rounded">
+                                    <p>{item.title}</p>
+                                    <p>Variant: {item.color} / {item.size}</p>
+                                    <p>रू {item.price} x {item.quantity}</p>
                                 </div>
                             </div>
-                            <div className="p-4 bg-gray-100 rounded mb-4">
-                                <p>INSTOCK - 3DITIONAL- CASUAL SUMMER EXCLUSIVE 3D PRINTED</p>
-                                <p>Variant: black./large</p>
-                                <p>रू 2,600 x 3</p>
-                            </div>
-                        </div>
+                        ))}
                         <div className="flex justify-between mb-2">
                             <span>Sub-total</span>
-                            <span>रू 7,800</span>
+                            <span>रू {calculateTotal()}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Delivery Charge</span>
@@ -150,11 +153,9 @@ const Checkout = () => {
                         </div>
                         <div className="flex justify-between font-semibold text-lg">
                             <span>Total</span>
-                            <span>रू 7,900</span>
+                            <span>रू {calculateTotal() + 100}</span>
                         </div>
                     </div>
-                    <button type="submit" className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button>
-
                 </div>
             </div>
         </div>

@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import Checkout from './components/Checkout';
 import { CartProvider } from './components/CartContext';
 import { useState } from 'react';
+import OrderList from './components/Post/OrderList';
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -37,6 +38,8 @@ function App() {
           <Route path='/' element={<New />}></Route>
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/item/orders" component={<OrderList />} /> {/* Add the route for OrderList */}
+
           <Route path='/shoes' element={<Shoes />}></Route>
           <Route path='/cloth' element={<Cloth />}></Route>
           <Route path='/glovs' element={<Gloves />}></Route>
@@ -44,7 +47,7 @@ function App() {
           <Route path='/auth' element={<SignIn />}></Route>
           <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path="/product/:id" element={<ProductPage toggleCart={toggleCart} />} />
-    
+
           {/* <Route path='/postlist' element={<PostList />}></Route> */}
           <Route path='/addpost' element={<AddPost />}></Route>
           {/* <Route path="/postlist" element={<PostList />} /> */}

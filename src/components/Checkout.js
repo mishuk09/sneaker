@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from './CartContext';
+import axios from 'axios';
 
 const Checkout = () => {
     const { cartItems } = useCart();
@@ -21,10 +22,21 @@ const Checkout = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log('Form data submitted:', formData);
+        const orderData = {
+            ...formData,
+            cartItems,
+            totalAmount: calculateTotal() + 100 // Assuming delivery charge is 100
+        };
+        try {
+            const response = await axios.post(' http://localhost:5000/item/orders', orderData);
+            console.log(response.data);
+            // Handle success (e.g., show a success message, clear cart, etc.)
+        } catch (error) {
+            console.error('Error placing order:', error);
+            // Handle error (e.g., show an error message)
+        }
     };
 
     const calculateTotal = () => {

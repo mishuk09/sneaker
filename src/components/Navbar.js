@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import mainlogo from '../mainlogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,6 +6,13 @@ import { faCartShopping, faMagnifyingGlass, faUser } from '@fortawesome/free-sol
 import Cart from './Cart'; // Import the Cart component
 
 const Navbar = ({ toggleCart, isCartOpen }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsAuthenticated(!!token);
+    }, []);
+
     return (
         <div>
             <div className="border-b shadow-md">
@@ -29,7 +36,11 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                         <div onClick={toggleCart} className="cursor-pointer">
                             <FontAwesomeIcon size='xl' icon={faCartShopping} />
                         </div>
-                        <div><Link to='/signin'><FontAwesomeIcon size='xl' icon={faUser} /></Link></div>
+                        <div>
+                            <Link to={isAuthenticated ? '/dashboard' : '/signin'}>
+                                <FontAwesomeIcon size='xl' icon={faUser} />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

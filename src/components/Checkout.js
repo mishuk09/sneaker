@@ -13,6 +13,7 @@ const Checkout = () => {
         address: '',
         landmark: '',
     });
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,8 +23,23 @@ const Checkout = () => {
         });
     };
 
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.fullName) newErrors.fullName = 'Full Name is required';
+        if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone Number is required';
+        if (!formData.city) newErrors.city = 'City is required';
+        if (!formData.address) newErrors.address = 'Address is required';
+        return newErrors;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const newErrors = validateForm();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+        setErrors({});
         const orderData = {
             ...formData,
             cartItems,
@@ -71,9 +87,10 @@ const Checkout = () => {
                                 name="fullName"
                                 value={formData.fullName}
                                 onChange={handleChange}
-                                className="w-full p-2 mb-4 border rounded"
+                                className={`w-full p-2 mb-4 border rounded ${errors.fullName ? 'border-red-500' : ''}`}
                                 required
                             />
+                            {errors.fullName && <p className="text-red-500">{errors.fullName}</p>}
                             <label className="block mb-2 font-medium">Email</label>
                             <input
                                 type="email"
@@ -90,10 +107,11 @@ const Checkout = () => {
                                     name="phoneNumber"
                                     value={formData.phoneNumber}
                                     onChange={handleChange}
-                                    className="w-full p-2 border rounded-r"
+                                    className={`w-full p-2 border rounded-r ${errors.phoneNumber ? 'border-red-500' : ''}`}
                                     required
                                 />
                             </div>
+                            {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
                             <label className="block mb-2 font-medium">Order Note (any message for us)</label>
                             <textarea
                                 name="orderNote"
@@ -109,22 +127,24 @@ const Checkout = () => {
                                 name="city"
                                 value={formData.city}
                                 onChange={handleChange}
-                                className="w-full p-2 mb-4 border rounded"
+                                className={`w-full p-2 mb-4 border rounded ${errors.city ? 'border-red-500' : ''}`}
                                 required
                             >
                                 <option value="">Select City</option>
                                 <option value="Kathmandu Inside Ring Road">Kathmandu Inside Ring Road</option>
                                 {/* Add more options as needed */}
                             </select>
+                            {errors.city && <p className="text-red-500">{errors.city}</p>}
                             <label className="block mb-2 font-medium">Address *</label>
                             <input
                                 type="text"
                                 name="address"
                                 value={formData.address}
                                 onChange={handleChange}
-                                className="w-full p-2 mb-4 border rounded"
+                                className={`w-full p-2 mb-4 border rounded ${errors.address ? 'border-red-500' : ''}`}
                                 required
                             />
+                            {errors.address && <p className="text-red-500">{errors.address}</p>}
                             <label className="block mb-2 font-medium">Landmark</label>
                             <input
                                 type="text"
@@ -149,12 +169,8 @@ const Checkout = () => {
                             </div>
                         </div>
                         {cartItems.length > 0 && (
-                            <button type="submit" onClick={handleSubmit} className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button>
+                            <button type="submit" className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button>
                         )}
-
-                        {/* <button type="submit" className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button> */}
-
-
                     </form>
                 </div>
                 <div className='w-full'>

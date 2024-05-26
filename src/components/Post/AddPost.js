@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import JoditEditor from 'jodit-react';
 import FileBase from 'react-file-base64';
 
 const AddPost = () => {
@@ -11,6 +12,8 @@ const AddPost = () => {
     const [color, setColor] = useState([]);
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const editor = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,7 +47,20 @@ const AddPost = () => {
         const newPost = { img, category, title, newPrice, oldPrice, color, size, description };
 
         axios.post('http://localhost:5000/posts/add', newPost)
-            .then(res => console.log(res.data))
+            .then(res => {
+                console.log(res.data);
+                // Reset fields
+                setImg('');
+                setCategory('');
+                setTitle('');
+                setNewPrice('');
+                setOldPrice('');
+                setColor([]);
+                setSize([]);
+                setDescription('');
+                // Set success message
+                setSuccessMessage('Product added successfully!');
+            })
             .catch(err => console.log(err));
     }
 
@@ -69,8 +85,13 @@ const AddPost = () => {
     }
 
     return (
-        <div className="container  mt-10  p-6 bg-white  ">
+        <div className="container mt-10 p-6 bg-white">
             <h2 className="text-2xl text-center font-semibold mb-6">Add New Product</h2>
+            {successMessage && (
+                <div className="mb-4 p-4 text-green-800 bg-green-200 rounded">
+                    {successMessage}
+                </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block mb-4 text-sm font-medium text-gray-700">Image</label>
@@ -166,12 +187,13 @@ const AddPost = () => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea
+                    <JoditEditor
+                        ref={editor}
                         value={description}
-                        onChange={e => setDescription(e.target.value)}
-                        required
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    ></textarea>
+                        tabIndex={1} // tabIndex of textarea
+                        onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                        onChange={(newContent) => { }}
+                    />
                 </div>
                 <button
                     type="submit"

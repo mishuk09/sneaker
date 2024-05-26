@@ -22,6 +22,7 @@ import Checkout from './components/Checkout';
 import { CartProvider } from './components/CartContext';
 import { useState } from 'react';
 import OrderList from './components/Post/OrderList';
+import Orders from './components/Post/Orders';
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -35,30 +36,25 @@ function App() {
         <Navbar toggleCart={toggleCart} isCartOpen={isCartOpen} />
 
         <Routes>
-          <Route path='/' element={<New />}></Route>
+          <Route path='/' element={<New />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/item/orders" component={<OrderList />} /> {/* Add the route for OrderList */}
+          <Route path="/orders" element={<Orders />} /> {/* Corrected route for Orders component */}
 
-          <Route path='/shoes' element={<Shoes />}></Route>
-          <Route path='/cloth' element={<Cloth />}></Route>
-          <Route path='/glovs' element={<Gloves />}></Route>
-          <Route path='/kitchen' element={<Kitchen />}></Route>
-          <Route path='/auth' element={<SignIn />}></Route>
-          <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route path='/shoes' element={<Shoes />} />
+          <Route path='/cloth' element={<Cloth />} />
+          <Route path='/glovs' element={<Gloves />} />
+          <Route path='/kitchen' element={<Kitchen />} />
+          <Route path='/auth' element={<SignIn />} />
+          <Route path='/dashboard' element={<Dashboard />} />
           <Route path="/product/:id" element={<ProductPage toggleCart={toggleCart} />} />
 
-          {/* <Route path='/postlist' element={<PostList />}></Route> */}
-          <Route path='/addpost' element={<AddPost />}></Route>
-          {/* <Route path="/postlist" element={<PostList />} /> */}
+          <Route path='/addpost' element={<AddPost />} />
           <Route path="/update/:id" element={<UpdatePost />} />
           <Route path="/delete/:id" element={<DeletePost />} />
 
-
           <Route path="/edit" element={<Edit />} />
           <Route path="/delete" element={<Delete />} />
-
-
         </Routes>
 
         <Footer />

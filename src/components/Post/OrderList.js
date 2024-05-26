@@ -1,63 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const OrderList = () => {
+const App = () => {
     const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/item/orders');
-                setOrders(response.data);
-                setLoading(false);
-            } catch (error) {
-                setError(error);
-                setLoading(false);
-            }
-        };
         fetchOrders();
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error fetching orders: {error.message}</div>;
-    }
+    const fetchOrders = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/order');
+            setOrders(response.data);
+        } catch (error) {
+            setError('Error fetching orders');
+            console.error(error);
+        }
+    };
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Orders List</h1>
-            {orders.map(order => (
-                <div key={order._id} className="mb-4 p-4 border rounded">
-                    <h2 className="text-xl font-semibold">Order ID: {order._id}</h2>
-                    <p><strong>Full Name:</strong> {order.fullName}</p>
-                    <p><strong>Email:</strong> {order.email}</p>
-                    <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
-                    <p><strong>Order Note:</strong> {order.orderNote}</p>
-                    <p><strong>City:</strong> {order.city}</p>
-                    <p><strong>Address:</strong> {order.address}</p>
-                    <p><strong>Landmark:</strong> {order.landmark}</p>
-                    <h3 className="text-lg font-semibold mt-2">Cart Items:</h3>
-                    <ul className="list-disc ml-6">
-                        {order.cartItems.map((item, index) => (
-                            <li key={index} className="mb-2">
-                                <p><strong>Title:</strong> {item.title}</p>
-                                <p><strong>Color:</strong> {item.color}</p>
-                                <p><strong>Size:</strong> {item.size}</p>
-                                <p><strong>Quantity:</strong> {item.quantity}</p>
-                                <p><strong>Price:</strong> रू {item.price}</p>
-                            </li>
-                        ))}
-                    </ul>
-                    <p><strong>Total Amount:</strong> रू {order.totalAmount}</p>
-                </div>
-            ))}
+        <div>
+            <h1>Orders</h1>
+            {error && <p>{error}</p>}
+            {orders.length > 0 ? (
+                <ul>
+                    {orders.map((order) => (
+                        <li key={order._id}>
+                            <h2>{order.fullName}</h2>
+                            <p>Email: {order.email}</p>
+                            <p>Phone: {order.phoneNumber}</p>
+                            <p>City: {order.city}</p>
+                            <p>Address: {order.address}</p>
+                            <p>Landmark: {order.landmark}</p>
+                            <p>Total Amount: {order.totalAmount}</p>
+                            <h3>Cart Items:</h3>
+                            <ul>
+                                {order.cartItems.map((item, index) => (
+                                    <li key={index}>
+                                        <p>Product: {item.title}</p>
+                                        <p>Color: {item.color}</p>
+                                        <p>Size: {item.size}</p>
+                                        <p>Quantity: {item.quantity}</p>
+                                        <p>Price: {item.price}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No orders found</p>
+            )}
         </div>
     );
 };
 
-export default OrderList;
+export default App;

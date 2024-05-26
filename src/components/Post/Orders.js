@@ -35,6 +35,26 @@ const Orders = () => {
         fetchOrders();
     }, []);
 
+    const handleCompleteOrder = async (orderId) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('Token not found');
+            }
+
+            await axios.delete(`http://localhost:5000/item/orders/${orderId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            // Remove the completed order from the UI
+            setOrders(orders.filter(order => order._id !== orderId));
+        } catch (error) {
+            console.error('Error completing order:', error);
+        }
+    };
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-8">Orders Management</h1>
@@ -68,6 +88,12 @@ const Orders = () => {
                                     </li>
                                 ))}
                             </ul>
+                            <button
+                                onClick={() => handleCompleteOrder(order._id)}
+                                className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 focus:outline-none focus:shadow-outline"
+                            >
+                                Complete Order
+                            </button>
                         </div>
                     ))}
                 </div>

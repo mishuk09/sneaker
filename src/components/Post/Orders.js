@@ -7,6 +7,7 @@ const Orders = () => {
     const [error, setError] = useState(null);
 
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -35,7 +36,7 @@ const Orders = () => {
         fetchData();
     }, []);
 
-    
+
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -65,44 +66,47 @@ const Orders = () => {
         fetchOrders();
     }, []);
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
 
     return (
-        <div>
+        <div  >
             <h1>Orders</h1>
-            <ul>
-                {orders.map((order) => (
-                    <li key={order._id}>
-                        <h2>Order by {order.fullName}</h2>
-                        <p>Email: {order.email}</p>
-                        <p>Phone: {order.phoneNumber}</p>
-                        <p>City: {order.city}</p>
-                        <p>Address: {order.address}</p>
-                        <p>Order Note: {order.orderNote}</p>
-                        <p>Total Amount: ${order.totalAmount}</p>
-                        <h3>Items:</h3>
+            {
+                loading ? (
+                    <div className="flex justify-center items-center h-screen">
+                        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+
+                ) :
+                    (
                         <ul>
-                            {order.cartItems.map((item, index) => (
-                                <li key={index}>
-                                    <p>Title: {item.title}</p>
-                                    <p>Color: {item.color}</p>
-                                    <p>Size: {item.size}</p>
-                                    <p>Quantity: {item.quantity}</p>
-                                    <p>Price: ${item.price}</p>
-                                    <img src={item.img} alt={item.title} width="50" />
+                            {orders.map((order) => (
+                                <li key={order._id}>
+                                    <h2>Order by {order.fullName}</h2>
+                                    <p>Email: {order.email}</p>
+                                    <p>Phone: {order.phoneNumber}</p>
+                                    <p>City: {order.city}</p>
+                                    <p>Address: {order.address}</p>
+                                    <p>Order Note: {order.orderNote}</p>
+                                    <p>Total Amount: ${order.totalAmount}</p>
+                                    <h3>Items:</h3>
+                                    <ul>
+                                        {order.cartItems.map((item, index) => (
+                                            <li key={index}>
+                                                <p>Title: {item.title}</p>
+                                                <p>Color: {item.color}</p>
+                                                <p>Size: {item.size}</p>
+                                                <p>Quantity: {item.quantity}</p>
+                                                <p>Price: ${item.price}</p>
+                                                <img src={item.img} alt={item.title} width="50" />
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </li>
                             ))}
                         </ul>
-                    </li>
-                ))}
-            </ul>
-        </div>
+                    )
+            }
+        </div >
     );
 };
 

@@ -15,6 +15,35 @@ const UpdatePost = () => {
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+
+                if (!token) {
+                    console.error('Token not found');
+                    return;
+                }
+
+                const response = await axios.get('http://localhost:5000//update/:id', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                console.log(response.data); // log the response
+            } catch (error) {
+                console.error('Error fetching data:', error.response ? error.response.data : error.message);
+                // Check for 401 or 403 error status and redirect to sign-in page
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    window.location.href = '/signin';
+                }
+            }
+        };
+        fetchData();
+    }, []);
+
     useEffect(() => {
         axios.get(`http://localhost:5000/posts/${id}`)
             .then(response => {

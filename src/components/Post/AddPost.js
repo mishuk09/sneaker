@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FileBase from 'react-file-base64';
 
@@ -11,6 +11,34 @@ const AddPost = () => {
     const [color, setColor] = useState([]);
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+
+                if (!token) {
+                    console.error('Token not found');
+                    return;
+                }
+
+                const response = await axios.get('http://localhost:5000/addpost', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                console.log(response.data); // log the response
+            } catch (error) {
+                console.error('Error fetching data:', error.response ? error.response.data : error.message);
+                // Check for 401 or 403 error status and redirect to sign-in page
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    window.location.href = '/signin';
+                }
+            }
+        };
+        fetchData();
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();

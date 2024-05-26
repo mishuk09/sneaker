@@ -40,7 +40,7 @@ const DeletePost = () => {
         axios.delete(`http://localhost:5000/posts/${id}`)
             .then(() => {
                 console.log('Post deleted.');
-                navigate('/');
+                navigate('/delete');
             })
             .catch(err => console.log(err));
     }

@@ -6,12 +6,12 @@ import { faCartShopping, faMagnifyingGlass, faUser } from '@fortawesome/free-sol
 import Cart from './Cart'; // Import the Cart component
 
 const Navbar = ({ toggleCart, isCartOpen }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsAuthenticated(!!token);
-    }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     setIsAuthenticated(!!token);
+    // }, []);
 
     return (
         <div>
@@ -37,7 +37,8 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                             <FontAwesomeIcon size='xl' icon={faCartShopping} />
                         </div>
                         <div>
-                            <Link to={isAuthenticated ? '/dashboard' : '/signin'}>
+                            {/* <Link to={isAuthenticated ? '/dashboard' : '/signin'}> */}
+                            <Link to='/signin'>
                                 <FontAwesomeIcon size='xl' icon={faUser} />
                             </Link>
                         </div>

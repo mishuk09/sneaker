@@ -3,7 +3,7 @@ import { useCart } from './CartContext';
 import axios from 'axios';
 
 const Checkout = () => {
-    const { cartItems } = useCart();
+    const { cartItems, setCartItems } = useCart();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -30,9 +30,20 @@ const Checkout = () => {
             totalAmount: calculateTotal() + 100 // Assuming delivery charge is 100
         };
         try {
-            const response = await axios.post(' http://localhost:5000/item/orders', orderData);
+            const response = await axios.post('http://localhost:5000/item/orders', orderData);
             console.log(response.data);
-            // Handle success (e.g., show a success message, clear cart, etc.)
+            // Clear form fields after successful order placement
+            setFormData({
+                fullName: '',
+                email: '',
+                phoneNumber: '',
+                orderNote: '',
+                city: '',
+                address: '',
+                landmark: '',
+            });
+            // Clear cart items after successful order placement
+            setCartItems([]);
         } catch (error) {
             console.error('Error placing order:', error);
             // Handle error (e.g., show an error message)
@@ -137,7 +148,13 @@ const Checkout = () => {
                                 <label className="font-medium">Cash on delivery</label>
                             </div>
                         </div>
-                        <button type="submit" className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button>
+                        {cartItems.length > 0 && (
+                            <button type="submit" onClick={handleSubmit} className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button>
+                        )}
+
+                        {/* <button type="submit" className="w-full p-3 bg-blue-500 text-white font-bold rounded">Place Order</button> */}
+
+
                     </form>
                 </div>
                 <div className='w-full'>

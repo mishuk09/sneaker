@@ -6,42 +6,10 @@ const Orders = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const token = localStorage.getItem('token');
-
-                if (!token) {
-                    console.error('Token not found');
-                    return;
-                }
-
-                const response = await axios.get('http://localhost:5000/orders', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                console.log(response.data); // log the response
-            } catch (error) {
-                console.error('Error fetching data:', error.response ? error.response.data : error.message);
-                // Check for 401 or 403 error status and redirect to sign-in page
-                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    window.location.href = '/signin';
-                }
-            }
-        };
-        fetchData();
-    }, []);
-
-
     useEffect(() => {
         const fetchOrders = async () => {
             try {
                 const token = localStorage.getItem('token');
-
                 if (!token) {
                     throw new Error('Token not found');
                 }
@@ -51,6 +19,7 @@ const Orders = () => {
                         'Authorization': `Bearer ${token}`
                     }
                 });
+
                 setOrders(response.data);
                 setLoading(false);
             } catch (error) {
@@ -66,47 +35,44 @@ const Orders = () => {
         fetchOrders();
     }, []);
 
-
     return (
-        <div  >
-            <h1>Orders</h1>
-            {
-                loading ? (
-                    <div className="flex justify-center items-center h-screen">
-                        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
-                    </div>
-
-                ) :
-                    (
-                        <ul>
-                            {orders.map((order) => (
-                                <li key={order._id}>
-                                    <h2>Order by {order.fullName}</h2>
-                                    <p>Email: {order.email}</p>
-                                    <p>Phone: {order.phoneNumber}</p>
-                                    <p>City: {order.city}</p>
-                                    <p>Address: {order.address}</p>
-                                    <p>Order Note: {order.orderNote}</p>
-                                    <p>Total Amount: ${order.totalAmount}</p>
-                                    <h3>Items:</h3>
-                                    <ul>
-                                        {order.cartItems.map((item, index) => (
-                                            <li key={index}>
-                                                <p>Title: {item.title}</p>
-                                                <p>Color: {item.color}</p>
-                                                <p>Size: {item.size}</p>
-                                                <p>Quantity: {item.quantity}</p>
-                                                <p>Price: ${item.price}</p>
-                                                <img src={item.img} alt={item.title} width="50" />
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </li>
-                            ))}
-                        </ul>
-                    )
-            }
-        </div >
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-8">Orders Management</h1>
+            {loading ? (
+                <div className="flex justify-center items-center h-screen">
+                    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
+            ) : error ? (
+                <div className="text-red-500">{error}</div>
+            ) : (
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                    {orders.map((order) => (
+                        <div key={order._id} className="border rounded p-4 bg-white shadow-md">
+                            <h2 className="text-xl font-semibold mb-2">Order by {order.fullName}</h2>
+                            <p><span className="font-semibold">Email:</span> {order.email}</p>
+                            <p><span className="font-semibold">Phone:</span> {order.phoneNumber}</p>
+                            <p><span className="font-semibold">City:</span> {order.city}</p>
+                            <p><span className="font-semibold">Address:</span> {order.address}</p>
+                            <p><span className="font-semibold">Order Note:</span> {order.orderNote}</p>
+                            <p><span className="font-semibold">Total Amount:</span> ${order.totalAmount}</p>
+                            <h3 className="font-semibold mt-2">Items:</h3>
+                            <ul>
+                                {order.cartItems.map((item, index) => (
+                                    <li key={index} className="border-t mt-2 pt-2">
+                                        <p><span className="font-semibold">Title:</span> {item.title}</p>
+                                        <p><span className="font-semibold">Color:</span> {item.color}</p>
+                                        <p><span className="font-semibold">Size:</span> {item.size}</p>
+                                        <p><span className="font-semibold">Quantity:</span> {item.quantity}</p>
+                                        <p><span className="font-semibold">Price:</span> ${item.price}</p>
+                                        <img src={item.img} alt={item.title} className="mt-2" width="50" />
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
     );
 };
 

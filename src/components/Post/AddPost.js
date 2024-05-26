@@ -28,10 +28,9 @@ const AddPost = () => {
                     }
                 });
 
-                console.log(response.data); // log the response
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error.response ? error.response.data : error.message);
-                // Check for 401 or 403 error status and redirect to sign-in page
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
                     window.location.href = '/signin';
                 }
@@ -70,69 +69,116 @@ const AddPost = () => {
     }
 
     return (
-        <div>
-            <h2>Add New Post</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="container  mt-10  p-6 bg-white  ">
+            <h2 className="text-2xl text-center font-semibold mb-6">Add New Product</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label>Image: </label>
+                    <label className="block mb-4 text-sm font-medium text-gray-700">Image</label>
                     <FileBase
                         type="file"
                         multiple={false}
                         onDone={({ base64 }) => setImg(base64)}
                         required
+                        className="mt-1"
                     />
                 </div>
                 <div>
-                    <label>Category: </label>
-                    <input type="text" value={category} onChange={e => setCategory(e.target.value)} required />
+                    <label className="block text-sm font-medium text-gray-700">Category</label>
+                    <input
+                        type="text"
+                        value={category}
+                        onChange={e => setCategory(e.target.value)}
+                        required
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
                 </div>
                 <div>
-                    <label>Title: </label>
-                    <input type="text" value={title} onChange={e => setTitle(e.target.value)} required />
+                    <label className="block text-sm font-medium text-gray-700">Title</label>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        required
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
                 </div>
                 <div>
-                    <label>New Price: </label>
-                    <input type="number" value={newPrice} onChange={e => setNewPrice(e.target.value)} required />
+                    <label className="block text-sm font-medium text-gray-700">New Price</label>
+                    <input
+                        type="number"
+                        value={newPrice}
+                        onChange={e => setNewPrice(e.target.value)}
+                        required
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
                 </div>
                 <div>
-                    <label>Old Price: </label>
-                    <input type="number" value={oldPrice} onChange={e => setOldPrice(e.target.value)} required />
+                    <label className="block text-sm font-medium text-gray-700">Old Price</label>
+                    <input
+                        type="number"
+                        value={oldPrice}
+                        onChange={e => setOldPrice(e.target.value)}
+                        required
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
                 </div>
                 <div>
-                    <label>Colors: </label>
+                    <label className="block text-sm font-medium text-gray-700">Colors</label>
                     {color.map((c, index) => (
-                        <input
-                            key={index}
-                            type="text"
-                            value={c}
-                            onChange={e => handleColorChange(index, e.target.value)}
-                            required
-                        />
+                        <div key={index} className="flex space-x-2 mt-1">
+                            <input
+                                type="text"
+                                value={c}
+                                onChange={e => handleColorChange(index, e.target.value)}
+                                required
+                                className="block w-full p-2 border border-gray-300 rounded-md"
+                            />
+                        </div>
                     ))}
-                    <button type="button" onClick={handleAddColor}>Add Color</button>
+                    <button
+                        type="button"
+                        onClick={handleAddColor}
+                        className="mt-2 text-sm text-blue-600 hover:underline"
+                    >
+                        Add Color
+                    </button>
                 </div>
                 <div>
-                    <label>Sizes: </label>
+                    <label className="block text-sm font-medium text-gray-700">Sizes</label>
                     {size.map((s, index) => (
-                        <input
-                            key={index}
-                            type="text"
-                            value={s}
-                            onChange={e => handleSizeChange(index, e.target.value)}
-                            required
-                        />
+                        <div key={index} className="flex space-x-2 mt-1">
+                            <input
+                                type="text"
+                                value={s}
+                                onChange={e => handleSizeChange(index, e.target.value)}
+                                required
+                                className="block w-full p-2 border border-gray-300 rounded-md"
+                            />
+                        </div>
                     ))}
-                    <button type="button" onClick={handleAddSize}>Add Size</button>
+                    <button
+                        type="button"
+                        onClick={handleAddSize}
+                        className="mt-2 text-sm text-blue-600 hover:underline"
+                    >
+                        Add Size
+                    </button>
                 </div>
                 <div>
-                    <label>Description: </label>
+                    <label className="block text-sm font-medium text-gray-700">Description</label>
                     <textarea
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         required
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     ></textarea>
                 </div>
-                <button type="submit">Add Post</button>
+                <button
+                    type="submit"
+                    className="mt-4 w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                    Add Post
+                </button>
             </form>
         </div>
     );

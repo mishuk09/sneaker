@@ -23,6 +23,7 @@ import { CartProvider } from './components/CartContext';
 import { useState } from 'react';
 import OrderList from './components/Post/OrderList';
 import Orders from './components/Post/Orders';
+import SignUp from './components/Auth/SignUp';
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -45,7 +46,8 @@ function App() {
           <Route path='/cloth' element={<Cloth />} />
           <Route path='/glovs' element={<Gloves />} />
           <Route path='/kitchen' element={<Kitchen />} />
-          <Route path='/auth' element={<SignIn />} />
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/signup' element={<SignUp />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path="/product/:id" element={<ProductPage toggleCart={toggleCart} />} />
 

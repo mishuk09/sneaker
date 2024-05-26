@@ -29,7 +29,7 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                         <div onClick={toggleCart} className="cursor-pointer">
                             <FontAwesomeIcon size='xl' icon={faCartShopping} />
                         </div>
-                        <div><Link to='/auth'><FontAwesomeIcon size='xl' icon={faUser} /></Link></div>
+                        <div><Link to='/signin'><FontAwesomeIcon size='xl' icon={faUser} /></Link></div>
                     </div>
                 </div>
             </div>

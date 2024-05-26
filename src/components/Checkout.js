@@ -73,10 +73,10 @@ const Checkout = () => {
     return (
         <div className="container mx-auto p-4 lg:px-0">
             <div className="text-center mb-10">
-                <img src="path-to-logo.png" alt="Brand Logo" className="mx-auto mb-4" />
-                <h1 className="text-2xl font-bold">Checkout</h1>
+
+                <h1 className="text-2xl mt-10 font-bold">Checkout</h1>
             </div>
-            <div className='flex gap-4'>
+            <div className='flex gap-4 mt-10'>
                 <div className='w-full'>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6">
@@ -173,7 +173,7 @@ const Checkout = () => {
                         )}
                     </form>
                 </div>
-                <div className='w-full'>
+                {/* <div className='w-full'>
                     <div className="mb-6">
                         <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
                         {cartItems.map((item, index) => (
@@ -201,7 +201,36 @@ const Checkout = () => {
                             <span>रू {calculateTotal() + 100}</span>
                         </div>
                     </div>
+                </div> */}
+
+                <div className='w-full'>
+                    <div className="mb-6 bg-white rounded-lg shadow-md">
+                        <h2 className="text-xl font-semibold mb-4 px-6 py-4 bg-gray-100 rounded-t-lg">Order Summary</h2>
+                        {cartItems.map((item, index) => (
+                            <div key={`${item.id}-${index}`} className='flex items-center gap-4 px-6 py-4 border-b border-gray-200'>
+                                <img className='w-20 h-20 object-cover rounded-lg' src={item.img} alt={item.title} />
+                                <div className="flex-1">
+                                    <p className="font-semibold">{item.title}</p>
+                                    <p className="text-sm text-gray-600">Variant: {item.color} / {item.size}</p>
+                                    <p className="text-gray-800">रू {item.price} x {item.quantity}</p>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="flex justify-between px-6 py-4">
+                            <span className="font-semibold">Sub-total</span>
+                            <span>रू {calculateTotal()}</span>
+                        </div>
+                        <div className="flex justify-between px-6 py-4">
+                            <span className="font-semibold">Delivery Charge</span>
+                            <span>रू 100</span>
+                        </div>
+                        <div className="flex justify-between px-6 py-4">
+                            <span className="font-semibold text-lg">Total</span>
+                            <span className="text-lg font-semibold">रू {calculateTotal() + 100}</span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     );

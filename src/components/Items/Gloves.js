@@ -7,9 +7,9 @@ const Gloves = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/posts/')
+        axios.get('http://localhost:5000/posts')
             .then(response => {
-                const filteredPosts = response.data.filter(post => post.category === 'gloves');
+                const filteredPosts = response.data.filter(post => post.category === 'glove');
                 setPosts(filteredPosts);
                 setLoading(false);
             })

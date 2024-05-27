@@ -5,7 +5,7 @@ import { useCart } from '../CartContext';
 
 const ProductPage = ({ toggleCart }) => {
   const { id } = useParams();
-  const [loading, isLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
@@ -19,12 +19,13 @@ const ProductPage = ({ toggleCart }) => {
         setProduct(productData);
         setSelectedColor(productData.color[0]); // Default to first color
         setSelectedSize(productData.size[0]); // Default to first size
-        isLoading(false);
+        setLoading(false);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.error('Error fetching product data:', error);
+        setLoading(false);
+      });
   }, [id]);
-
-
 
   const handleQuantityChange = (increment) => {
     setQuantity(prevQuantity => Math.max(1, prevQuantity + increment));
@@ -43,8 +44,13 @@ const ProductPage = ({ toggleCart }) => {
     toggleCart(); // Open cart when item is added
   };
 
+  const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+  };
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mt-10 mb-20 mx-auto p-4">
       {
         loading ? (
           <div className="flex justify-center items-center h-screen">
@@ -62,7 +68,7 @@ const ProductPage = ({ toggleCart }) => {
             <div className="md:w-1/2 mt-4 md:mt-0">
               <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
               <div className='flex items-center'>
-                <p className="text-xl me-4 font-semibold mb-1 text-red-500">रू {product.newPrice}</p>
+                <p className="text-xl mr-4 font-semibold mb-1 text-red-500">रू {product.newPrice}</p>
                 <p className="text-sm font-semibold mb-1 text-gray-700 line-through">रू {product.oldPrice}</p>
               </div>
               <p className="text-green-500 font-bold mb-4">
@@ -76,7 +82,8 @@ const ProductPage = ({ toggleCart }) => {
                   {product.color.map(color => (
                     <button
                       key={color}
-                      className="relative px-4 py-4 rounded-full border"
+                      aria-label={`Select ${color}`}
+                      className={`relative w-10 h-10 rounded-full border ${selectedColor === color ? 'ring-2 ring-blue-500' : ''}`}
                       style={{ backgroundColor: color.toLowerCase() }}
                       onClick={() => setSelectedColor(color)}
                     >
@@ -94,7 +101,8 @@ const ProductPage = ({ toggleCart }) => {
                   {product.size.map(size => (
                     <button
                       key={size}
-                      className={`px-4 py-2 text-base rounded-full border ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
+                      aria-label={`Select size ${size}`}
+                      className={`w-10 h-10 flex items-center justify-center text-base rounded-full border ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}
@@ -106,6 +114,7 @@ const ProductPage = ({ toggleCart }) => {
               <div className="mb-4 flex items-center">
                 <label className="block text-sm font-semibold text-gray-700 mr-4">Quantity</label>
                 <button
+                  aria-label="Decrease quantity"
                   className="px-4 py-2 bg-gray-200 rounded-l-lg"
                   onClick={() => handleQuantityChange(-1)}
                 >-</button>
@@ -116,13 +125,14 @@ const ProductPage = ({ toggleCart }) => {
                   className="w-16 p-2 border-t border-b text-center"
                 />
                 <button
+                  aria-label="Increase quantity"
                   className="px-4 py-2 bg-gray-200 rounded-r-lg"
                   onClick={() => handleQuantityChange(1)}
                 >+</button>
               </div>
 
               <button
-                className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600"
+                className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
                 onClick={handleAddToCart}
               >
                 Add to Cart
@@ -130,14 +140,13 @@ const ProductPage = ({ toggleCart }) => {
 
               <div className="mt-8">
                 <h2 className="text-2xl font-bold mb-4">Description</h2>
-                <p className="text-gray-700 mb-2">{product.description}</p>
+                <p className="text-gray-700 mb-2">{stripHtmlTags(product.description)}</p>
                 {/* Add more product details if needed */}
               </div>
             </div>
           </div>
         )
       }
-
     </div>
   );
 };

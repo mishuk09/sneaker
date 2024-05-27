@@ -27,8 +27,8 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                             <img className='w-12' src={mainlogo} alt="Logo" />
                         </Link>
                     </div>
-                    <div className="flex items-center">
-                        <div className="navbar-icons flex gap-6 lg:hidden">
+                    <div className="flex items-center lg:hidden">
+                        <div className="navbar-icons flex gap-6">
                             <div><FontAwesomeIcon size='xl' icon={faMagnifyingGlass} /></div>
                             <div onClick={toggleCart} className="cursor-pointer">
                                 <FontAwesomeIcon size='xl' icon={faCartShopping} />
@@ -39,19 +39,28 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                                 </Link>
                             </div>
                         </div>
-                        <button className="lg:hidden ml-4" onClick={toggleMobileMenu}>
+                        <button className="ml-4" onClick={toggleMobileMenu}>
                             <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="xl" />
                         </button>
                     </div>
-                    <div className="navbar-icons hidden lg:flex gap-6">
-                        <div><FontAwesomeIcon size='xl' icon={faMagnifyingGlass} /></div>
-                        <div onClick={toggleCart} className="cursor-pointer">
-                            <FontAwesomeIcon size='xl' icon={faCartShopping} />
-                        </div>
-                        <div>
-                            <Link to={isAuthenticated ? '/dashboard' : '/signin'}>
-                                <FontAwesomeIcon size='xl' icon={faUser} />
-                            </Link>
+                    <div className="hidden lg:flex lg:items-center lg:space-x-4 md:justify-center">
+                        <ul className="flex space-x-4 me-10">
+                            <li className='font-semibold'><Link to='/'>New</Link></li>
+                            <li className='font-semibold'><Link to='/shoes'>Shoes</Link></li>
+                            <li className='font-semibold'><Link to='/cloth'>Clothes</Link></li>
+                            <li className='font-semibold'><Link to='/gloves'>Gloves</Link></li>
+                            <li className='font-semibold'><Link to='/kitchen'>Kitchen</Link></li>
+                        </ul>
+                        <div className="flex gap-6">
+                            <div><FontAwesomeIcon size='xl' icon={faMagnifyingGlass} /></div>
+                            <div onClick={toggleCart} className="cursor-pointer">
+                                <FontAwesomeIcon size='xl' icon={faCartShopping} />
+                            </div>
+                            <div>
+                                <Link to={isAuthenticated ? '/dashboard' : '/signin'}>
+                                    <FontAwesomeIcon size='xl' icon={faUser} />
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

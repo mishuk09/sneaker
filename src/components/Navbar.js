@@ -45,7 +45,7 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                     </div>
                     <div className="hidden lg:flex lg:items-center lg:space-x-4 md:justify-center">
                         <ul className="flex space-x-4 me-10">
-                            <li className='font-semibold'><Link to='/'>New</Link></li>
+                            <li className='font-semibold'><Link to='/new'>New</Link></li>
                             <li className='font-semibold'><Link to='/shoes'>Shoes</Link></li>
                             <li className='font-semibold'><Link to='/cloth'>Clothes</Link></li>
                             <li className='font-semibold'><Link to='/gloves'>Gloves</Link></li>
@@ -71,7 +71,7 @@ const Navbar = ({ toggleCart, isCartOpen }) => {
                         <FontAwesomeIcon icon={faTimes} size="2x" />
                     </button>
                     <ul className="flex flex-col items-center space-y-6">
-                        <li className='text-white text-xl font-semibold'><Link to='/' onClick={toggleMobileMenu}>New</Link></li>
+                        <li className='text-white text-xl font-semibold'><Link to='/new' onClick={toggleMobileMenu}>New</Link></li>
                         <li className='text-white text-xl font-semibold'><Link to='/shoes' onClick={toggleMobileMenu}>Shoes</Link></li>
                         <li className='text-white text-xl font-semibold'><Link to='/cloth' onClick={toggleMobileMenu}>Clothes</Link></li>
                         <li className='text-white text-xl font-semibold'><Link to='/gloves' onClick={toggleMobileMenu}>Gloves</Link></li>

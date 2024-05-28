@@ -3,6 +3,7 @@ import home from '../home.png';
 import cloth from '../cloth.png';
 import gloves from '../gloves.jpg';
 import shoes from '../shoes.png';
+import New from './Items/New';
 
 const Home = () => {
     return (
@@ -46,6 +47,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+
+            <New />
         </div>
     );
 };

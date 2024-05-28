@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+
 import Navbar from './components/Navbar';
 import { Route, Routes } from 'react-router';
 import SignIn from './components/Auth/SignIn';
@@ -9,7 +8,6 @@ import Cloth from './components/Items/Cloth';
 import Gloves from './components/Items/Gloves';
 import Kitchen from './components/Items/Kitchen';
 import Dashboard from './components/Auth/Dashboard';
-import PostList from './components/Post/PostList';
 import AddPost from './components/Post/AddPost';
 import UpdatePost from './components/Post/UpdatePost';
 import DeletePost from './components/Post/DeletePost';
@@ -21,7 +19,6 @@ import Footer from './components/Footer';
 import Checkout from './components/Checkout';
 import { CartProvider } from './components/CartContext';
 import { useState } from 'react';
-import OrderList from './components/Post/OrderList';
 import Orders from './components/Post/Orders';
 import SignUp from './components/Auth/SignUp';
 

@@ -3,44 +3,44 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    const navigate = useNavigate(); // Get the navigate function
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                navigate('/signin');
+                return;
+            }
+
             try {
-                const token = localStorage.getItem('token');
-
-                if (!token) {
-                    console.error('Token not found');
-                    return;
-                }
-
                 const response = await axios.get('http://localhost:5000/dashboard', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
 
-                console.log(response.data); // log the response
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error.response ? error.response.data : error.message);
-                // Check for 401 or 403 error status and redirect to sign-in page
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
                     navigate('/signin');
                 }
             }
         };
+
         fetchData();
     }, [navigate]);
 
     const handleLogout = () => {
-        localStorage.removeItem('token'); // Remove the token from localStorage
-        navigate('/signin'); // Redirect to the sign-in page
+        localStorage.removeItem('token');
+        navigate('/signin');
     };
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-            <div className="  bg-gray-100 flex flex-col">
+            <div className="bg-gray-100 flex flex-col">
                 <header className="bg-white shadow">
                     <div className="container mx-auto px-4 py-6 flex justify-between items-center">
                         <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>

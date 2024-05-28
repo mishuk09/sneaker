@@ -28,6 +28,7 @@ import PrivacyPolicy from './components/Customers/PrivacyPolicy';
 import TermsOfService from './components/Customers/TermsOfService';
 import AboutUs from './components/Customers/AboutUs';
 import ContactUs from './components/Customers/ContactUs';
+import Home from './components/Home';
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -41,7 +42,8 @@ function App() {
         <Navbar toggleCart={toggleCart} isCartOpen={isCartOpen} />
 
         <Routes>
-          <Route path='/' element={<New />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/new' element={<New />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} /> {/* Corrected route for Orders component */}
@@ -62,7 +64,6 @@ function App() {
           <Route path="/edit" element={<Edit />} />
           <Route path="/delete" element={<Delete />} />
 
-
           <Route path="/faqs" element={<FAQs />} />
           <Route path="/ship" element={<ShippingReturns />} />
           <Route path="/ordertrack" element={<OrderTracking />} />
@@ -70,8 +71,6 @@ function App() {
           <Route path="/tearms" element={<TermsOfService />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
-
-
 
         </Routes>
 

@@ -13,6 +13,7 @@ const AddPost = () => {
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [fileInputKey, setFileInputKey] = useState(Date.now()); // Add state for key
     const editor = useRef(null);
 
     useEffect(() => {
@@ -58,6 +59,8 @@ const AddPost = () => {
                 setColor([]);
                 setSize([]);
                 setDescription('');
+                // Clear file input by updating the key
+                setFileInputKey(Date.now()); // Reset file input
                 // Set success message
                 setSuccessMessage('Product added successfully!');
             })
@@ -96,6 +99,7 @@ const AddPost = () => {
                 <div>
                     <label className="block mb-4 text-sm font-medium text-gray-700">Image</label>
                     <FileBase
+                        key={fileInputKey} // Add key to FileBase
                         type="file"
                         multiple={false}
                         onDone={({ base64 }) => setImg(base64)}

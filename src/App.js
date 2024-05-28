@@ -21,6 +21,13 @@ import { CartProvider } from './components/CartContext';
 import { useState } from 'react';
 import Orders from './components/Post/Orders';
 import SignUp from './components/Auth/SignUp';
+import FAQs from './components/Customers/FAQs';
+import ShippingReturns from './components/Customers/ShippingReturns';
+import OrderTracking from './components/Customers/OrderTracking';
+import PrivacyPolicy from './components/Customers/PrivacyPolicy';
+import TermsOfService from './components/Customers/TermsOfService';
+import AboutUs from './components/Customers/AboutUs';
+import ContactUs from './components/Customers/ContactUs';
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -54,6 +61,18 @@ function App() {
 
           <Route path="/edit" element={<Edit />} />
           <Route path="/delete" element={<Delete />} />
+
+
+          <Route path="/faqs" element={<FAQs />} />
+          <Route path="/ship" element={<ShippingReturns />} />
+          <Route path="/ordertrack" element={<OrderTracking />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/tearms" element={<TermsOfService />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
+
+
+
         </Routes>
 
         <Footer />

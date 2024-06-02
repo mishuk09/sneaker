@@ -26,7 +26,7 @@ const AddPost = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:5000/addpost', {
+                const response = await axios.get('https://sneakers-backend-1.onrender.com/addpost', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -47,7 +47,7 @@ const AddPost = () => {
         e.preventDefault();
         const newPost = { img, category, title, newPrice, oldPrice, color, size, description };
 
-        axios.post('http://localhost:5000/posts/add', newPost)
+        axios.post('https://sneakers-backend-1.onrender.com/posts/add', newPost)
             .then(res => {
                 console.log(res.data);
                 // Reset fields

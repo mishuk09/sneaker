@@ -7,7 +7,7 @@ const New = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/posts/')
+        axios.get('https://sneakers-backend-1.onrender.com/posts/')
             .then(response => {
                 setPosts(response.data.slice(0, 12));
                 setLoading(false);
@@ -26,7 +26,7 @@ const New = () => {
                     <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
                 </div>
             ) : (
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {posts.map(product => (
                         <Link to={`/product/${product._id}`} key={product._id} className="bg-white rounded-sm shadow-md p-2  ">

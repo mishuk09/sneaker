@@ -25,7 +25,7 @@ const UpdatePost = () => {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:5000/posts/${id}`, {
+                const response = await axios.get(`https://sneakers-backend-1.onrender.com/posts/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -54,7 +54,7 @@ const UpdatePost = () => {
         e.preventDefault();
         const updatedPost = { img, category, title, newPrice, oldPrice, color, size, description };
 
-        axios.post(`http://localhost:5000/posts/update/${id}`, updatedPost)
+        axios.post(`https://sneakers-backend-1.onrender.com/posts/update/${id}`, updatedPost)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
     }

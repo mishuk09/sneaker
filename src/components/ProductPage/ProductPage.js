@@ -13,7 +13,7 @@ const ProductPage = ({ toggleCart }) => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/posts/${id}`)
+    axios.get(`https://sneakers-backend-1.onrender.com/posts/${id}`)
       .then(response => {
         const productData = response.data;
         setProduct(productData);

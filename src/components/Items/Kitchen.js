@@ -7,7 +7,7 @@ const Kitchen = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/posts')
+        axios.get('https://sneakers-backend-1.onrender.com/posts')
             .then(response => {
                 const filteredPosts = response.data.filter(post => post.category === 'kitchen');
                 setPosts(filteredPosts);

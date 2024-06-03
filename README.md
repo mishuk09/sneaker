@@ -1,6 +1,6 @@
 <!-- Header -->
 <p align="center">
-  <img src="https://github.com/your-username/your-repo/blob/main/assets/logo.png" alt="E-commerce Banner">
+  <img src="https://github.com/mishuk09/sneaker/blob/master/public/logo/sneakers.png" alt="E-commerce Banner">
 </p>
 
 <!-- Title -->
@@ -86,12 +86,4 @@ Your cart is currently empty. Add items to your cart to see the total amount.
   Call: +123 456 7890
 </p>
 
-## Newsletter
-
-Stay updated with our latest offers and products. Subscribe to our newsletter:
-
-```html
-<form action="https://yourwebsite.com/subscribe" method="post">
-  <input type="email" name="email" placeholder="Enter your email">
-  <button type="submit">Subscribe</button>
-</form>
+ 
